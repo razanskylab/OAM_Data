@@ -54,7 +54,8 @@ classdef ShotData < BaseClass
     loadCroppedData(1,1) {mustBeNumericOrLogical} = true;
 
     % settings/methods stored in sub classes
-    Out = OutputProperties(); % see OutputProperties class
+    % Out = OutputProperties(); % see OutputProperties class
+    Out = []; % see OutputProperties class
     % output/plotting options
     useUnits(1,1) {mustBeNumericOrLogical} = false;
   end
@@ -353,7 +354,7 @@ classdef ShotData < BaseClass
     function depth = get.depth(SDO)
       % same as z- but in mm always
       if ~isempty(SDO.dt)
-        z = SDO.zRange();
+        z = SDO.zRange; %#ok<*PROP>
         % take care if we downsampled before...
         isIntegerDownSampling = ~any(mod(SDO.reSampleFactors(1),1));
         if isIntegerDownSampling
@@ -377,7 +378,7 @@ classdef ShotData < BaseClass
     %%===========================================================================
     function df = get.df(SDO)
       df = 1./SDO.dt;
-      if ~isempty(df) && (df == 1 || df == 0)
+      if ~isempty(df) && (df == 1 || df == 0) %#ok<BDSCI>
         short_warn('df = 1/0, you probably still need to set it.');
       end
     end

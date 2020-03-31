@@ -125,7 +125,7 @@ classdef Pd2Energy < handle
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Destructor: Mainly used to close the serial connection correctly
-    function delete(PDE)
+    function delete(~)
       % close connections etc
     end
 
@@ -163,7 +163,7 @@ classdef Pd2Energy < handle
     % end
     function matchedPd = get.matchedPd(PDE)
       pmMean = mean(PDE.pm); % in uJ
-      pdMean = mean(PDE.pd);
+      pdMean = mean(PDE.pd); %#ok<*PROP>
       energyRatio = pmMean/pdMean;
       matchedPd = PDE.pd.*energyRatio;
     end

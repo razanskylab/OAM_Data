@@ -4,3 +4,9 @@
 [submodule "BaseClass"]
 	path = BaseClass
 	url = https://github.com/razanskylab/BaseClass.git
+[submodule "BaseClass"]
+	path = BaseClass
+	url = https://github.com/razanskylab/BaseClass.git
+[submodule "FreqFilter"]
+	path = FreqFilter
+	url = https://github.com/razanskylab/FrequencyFilter.git

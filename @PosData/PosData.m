@@ -147,7 +147,7 @@ classdef PosData < BaseClass
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Destructor: Mainly used to close the serial connection correctly
-    function delete(POS)
+    function delete(~)
       % close connections etc
     end
 

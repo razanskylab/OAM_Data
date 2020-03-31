@@ -1,9 +1,6 @@
 % ShotData Class
 % (johannesrebling@gmail.com), 2018
 
-% toDo
-% figure out how to handle ROI, XYZ, DR, etc...
-
 classdef ShotData < BaseClass
 
   % processing settings %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -49,7 +46,8 @@ classdef ShotData < BaseClass
     loadCroppedData(1,1) {mustBeNumericOrLogical} = true;
 
     % settings/methods stored in sub classes
-    Out = OutputProperties(); % see OutputProperties class
+    % Out = OutputProperties(); % see OutputProperties class
+    Out = []; % see OutputProperties class
     % output/plotting options
     useUnits(1,1) {mustBeNumericOrLogical} = false;
   end

@@ -35,7 +35,7 @@ function [sigMat] = Apply_Signal_Polarity(SDO, sigMat)
       sigMat(sigMat < 0) = 0; % take pos only values
     case -1
 
-      if sigMinMax(0) >= 0
+      if sigMinMax(1) >= 0
         short_warn('No signals < 0, not possible to use only negative values!');
         return;
       end

@@ -12,14 +12,22 @@ function Pd_Shot_To_Value(PDE,pdShots)
 
   % pd shots should have form nShots x nSamples
   % (it's recorded that way in the pd cal), so we make sure thats the case!
-  sizePdShots = size(pdShots);
-  nCol = sizePdShots(1);
-  nRows = sizePdShots(2);
-  if nRows > nCol
-    short_warn('[PDE] pdShots seems to be flipped... correcting this for you!');
-    pdShots = pdShots';
-  end
+  % sizePdShots = size(pdShots);
+  % nCol = sizePdShots(1);
+  % nRows = sizePdShots(2);
+%   if nRows > nCol
+%     short_warn('[PDE] pdShots seems to be flipped... correcting this for you!');
+%     pdShots = pdShots';
+%   end
 
+  % remove noise floor
+  vprintf(PDE.verboseOutput, PDE.outTarget, '[PD2E] Converting pd shots to energies (a.u.)...');
+  noiseShots = pdShots(:, PDE.noiseWindow);
+  noiseFloor = mean(noiseShots(:));
+  if PDE.doRemoveNoise
+    pdShots = bsxfun(@minus, pdShots, noiseFloor); % remove noise floor
+  end
+  
   % store shot shape for plotting and later validation
   % get overal max/min shots (ones with lowest and highest peaks...)
   [~,maxShotIdx] = max(max(pdShots,[],2));
@@ -28,15 +36,6 @@ function Pd_Shot_To_Value(PDE,pdShots)
   PDE.pdMin = squeeze(pdShots(minShotIdx,:));
   % get shape of average shot
   PDE.pdMean = mean(pdShots);
-
-  % remove noise floor
-  vprintf(PDE.verboseOutput, PDE.outTarget, '[PD2E] Converting pd shots to energies (a.u.)...');
-  noiseShots = pdShots(:, PDE.noiseWindow);
-  noiseFloor = mean(noiseShots(:));
-
-  if PDE.doRemoveNoise
-    pdShots = bsxfun(@minus, pdShots, noiseFloor); % remove noise floor
-  end
 
   % only keep data within signal window
   pdShots = pdShots(:,PDE.signalWindow);

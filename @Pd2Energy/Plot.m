@@ -36,7 +36,7 @@ function Plot(PDE,plotOption,varargin)
   pmSort = PDE.pmSort.*1e6;
   pdSort = PDE.pdSort;
   pmFit = PDE.pmFit.*1e6;
-  pmFitUnsort = PDE.pmFitUnsort.*1e6;
+%   pmFitUnsort = PDE.pmFitUnsort.*1e6;
 
   pdMax = PDE.pdMax;
   pdMin = PDE.pdMin;
@@ -65,7 +65,7 @@ function Plot(PDE,plotOption,varargin)
     subplot(5,4,18);
       PDE.Plot('Pm_Histo');
 
-    subplot(3,2,2);
+    subplot(3,4,[3 4]);
       PDE.Plot('Correlation');
     subplot(3,2,4);
       PDE.Plot('Error_Info');
@@ -100,7 +100,8 @@ function Plot(PDE,plotOption,varargin)
   case 'Corr_Vs_Time' %plot correlation of pd vs pm over time using smaller windows
     corrWindowPer = 1;
     corrWindow = round(corrWindowPer/100*length(pd));
-    nWindows = length(pd)./corrWindow;
+    corrWindow = max(corrWindow,5); % have at least 3 shots for cor window..
+    nWindows = round(length(pd)./corrWindow);
     corrs = zeros(nWindows,1);
     % FIXME rewrite as vector code?
     for iWin = 1:nWindows
@@ -200,10 +201,10 @@ function Plot(PDE,plotOption,varargin)
 
     meanBasedError = mean(abs(pdMatched-pmSort))./pmMean*100;
 
-    pmFitError(1,:) = pmFit + PDE.Poly.fitDelta*1e6;
-    pmFitError(2,:) = pmFit - PDE.Poly.fitDelta*1e6;
+%     pmFitError(1,:) = pmFit + PDE.Poly.fitDelta*1e6;
+%     pmFitError(2,:) = pmFit - PDE.Poly.fitDelta*1e6;
 
-    legendEntry{1} = 'Raw Data';
+%     legendEntry{1} = 'Raw Data';
     p = scatter(pmSort,pdSort,'.');
     p.MarkerFaceColor = Colors.DarkGray;
     p.MarkerEdgeColor = Colors.DarkGray;
@@ -211,7 +212,7 @@ function Plot(PDE,plotOption,varargin)
     p.MarkerEdgeAlpha = 0.1;
     hold on
 
-    legendEntry{2} = 'Polyfit';
+%     legendEntry{2} = 'Polyfit';
     p1 = plot(pmFit,pdSort,'.');
     if ~isempty(color)
       p1.Color = color;
@@ -228,6 +229,7 @@ function Plot(PDE,plotOption,varargin)
     ylabel('Photodiode Energies (a.u.)');
 
     title(titleStr);
+  
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   case 'Error_Info' %  error vs shots in nJ together with info on mean error
     fitErrorAbs = mean(abs(pmFit-pmSort))*1e3;
@@ -278,6 +280,12 @@ function Plot(PDE,plotOption,varargin)
     errorMean = mean(absError(:));
     errorStd = std(absError(:));
     % move outliers in a little to compress range for plotting
+    
+        % for a square image, we would use this widht
+    width = ceil(sqrt(length(absError)));
+    % but we want it to be wider and not not as high, so we use this widh
+    width = 2*width;
+    absErrorIm = vec2mat(absError,width);
     absError(absErrorIm>errorMean+3*errorStd) = errorMean+3*errorStd;
 
     % for a square image, we would use this widht

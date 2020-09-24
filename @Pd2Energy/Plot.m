@@ -46,7 +46,7 @@ function Plot(PDE,plotOption,varargin)
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   case 'Single Meas' % this is where we get sneaky and use recursion...
     % generate overview plot for current PDE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    figure();
+    % figure();
     % correlation is poor, plot an overview
     subplot(5,4,1)
       PDE.Plot('Pd_Signals_Long');

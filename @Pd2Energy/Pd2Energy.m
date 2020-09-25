@@ -6,7 +6,7 @@
 % FIXME/TODO
 % add laser power statistics -> get and plot to workspace
 %
-classdef Pd2Energy < handle
+classdef Pd2Energy < BaseClass
 
   properties
     % info on how data was recorded, all for reference, some for plotting %%%%%%
@@ -73,25 +73,10 @@ classdef Pd2Energy < handle
     FitResult = struct();
   end
 
-  properties (Hidden=true)
-  end
-
-  % constant properties
-  % https://de.mathworks.com/help/matlab/matlab_oop/properties-with-constant-values.html
   properties (Constant)
-    FONT_SIZE = 10;
-    LINE_WIDTH = 1.5;
-    LEGEND_FONT_SIZE = 8;
-  end
-
-  % same as constant but now showing up as property
-  properties (Constant,Hidden=true)
   end
 
   properties
-  % defined in base class but this way we can have set/get in sublcasses, which
-  % is % needed for FOAM processor
-    silent(1,1) {mustBeNumericOrLogical} = false;
     verboseOutput(1,1) {mustBeNumericOrLogical} = true; % more detailed output to workspace...
     verbosePlotting(1,1) {mustBeNumericOrLogical} = false; % more figures...
     figureVisibility(1,:) char {mustBeMember(figureVisibility,{'on','off'})} = 'on';
@@ -106,13 +91,6 @@ classdef Pd2Energy < handle
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % constructor, called when class is created
     function PDE = Pd2Energy(varargin)
-      % set default style, so that plotting is consistent...
-      set(0,'DefaultAxesFontSize',PDE.FONT_SIZE);
-      set(0,'DefaultTextFontSize',PDE.FONT_SIZE);
-      set(0,'DefaultLineLinewidth',PDE.LINE_WIDTH);
-      format compact;
-      set(0,'defaultfigurecolor',[1 1 1]);
-
       % create deep copy of class if handed over as input
       className = class(PDE);
       if nargin && isa(varargin{1},className)
@@ -120,39 +98,17 @@ classdef Pd2Energy < handle
       elseif nargin && contains('edge oa onda dye', lower(varargin{1}))
         PDE.mode = lower(varargin{1});
       end
-
     end
 
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % Destructor: Mainly used to close the serial connection correctly
     function delete(~)
-      % close connections etc
     end
 
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % when saved, hand over only properties stored in saveObj
     function SaveObj = saveobj(PDE)
-      % only save public properties of the class if you save it to mat file
-      % without this saveobj function you will create an error when trying
-      % to save this class
       SaveObj = PDE;
     end
 
-    % Plot_Pd_Vs_Pm(PDE,plotOption);
   end
 
-
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %% "Standard" methods, i.e. functions which can be called by the user and by
-  % the class itself
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  methods
-  end
-
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  methods (Access = private)
-
-  end
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   methods

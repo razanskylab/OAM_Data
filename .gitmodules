@@ -1,9 +1,19 @@
 # [submodule "MatlabUtilities"]
 # 	path = MatlabUtilities
 # 	url = https://github.com/razanskylab/MatlabUtilities.git
+
 # [submodule "BaseClass"]
 # 	path = BaseClass
 # 	url = https://github.com/razanskylab/BaseClass.git
+
 # [submodule "FreqFilter"]
 # 	path = FreqFilter
 # 	url = https://github.com/razanskylab/FrequencyFilter.git
+
+# [submodule "Frangi_Filter"]
+# 	path = Frangi_Filter
+# 	url = https://github.com/razanskylab/Frangi_Filter.git
+
+# [submodule "AOVA"]
+# 	path = AOVA
+# 	url = https://github.com/razanskylab/AOVA.git

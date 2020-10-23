@@ -34,6 +34,7 @@ classdef PosData < BaseClass
     bScanRate(1,1) {mustBeNumeric} = 0; % n Bscans per second
     nBscans(1,1) {mustBeNumeric} = 0;% number of bscans we should have
     moveTime(1,1) {mustBeNumeric} = 0;
+    zPos(1,1) {mustBeNumeric}; % position of z-stage if anyone cares...
   end
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
